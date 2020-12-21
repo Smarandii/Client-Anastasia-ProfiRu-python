@@ -58,10 +58,10 @@ class Rectangle(Figure):
         self.side41 = round(abs((self.point1[1] - self.point4[1]) ** 2 + (self.point1[0] - self.point4[0]) ** 2) ** 0.5, 2)
 
     def calculate_perimeter(self):
-        return self.side12 + self.side23 + self.side34 + self.side41
+        return round(self.side12 + self.side23 + self.side34 + self.side41, 2)
 
     def calculate_square(self):
-        return self.side41 * self.side12
+        return round(self.side41 * self.side12, 2)
 
 
 class Ellipse(Figure):
@@ -78,37 +78,29 @@ class Ellipse(Figure):
         return round(math.pi * self.a * self.b, 2)
 
 
-def sort_perimeter(my_list: list):
-    pos = 0
-    i = 0
-    minimum = my_list[pos]
-    while pos != len(my_figures) - 1:
-        if i == len(my_figures) - 1:
-            break
-        if my_figures[i].calculate_perimeter() < minimum.calculate_perimeter():
-            minimum = my_list[i]
-            my_list[pos], my_list[i] = minimum, my_list[pos]
-            pos += 1
-        i += 1
+def sort_perimeter(my_list):
+    for i in range(len(my_list)):
+        key = my_list[i]
+        j = i - 1
+        while j >= 0 and key.calculate_perimeter() < my_list[j].calculate_perimeter():
+            my_list[j + 1] = my_list[j]
+            j -= 1
+        my_list[j+1] = key
     return my_list
 
 
 def sort_square(my_list: list):
-    pos = 0
-    i = 0
-    minimum = my_list[pos]
-    while pos != len(my_figures) - 1:
-        if i == len(my_figures) - 1:
-            break
-        if my_figures[i].calculate_square() < minimum.calculate_square():
-            minimum = my_list[i]
-            my_list[pos], my_list[i] = minimum, my_list[pos]
-            pos += 1
-        i += 1
+    for i in range(len(my_list)):
+        key = my_list[i]
+        j = i - 1
+        while j >= 0 and key.calculate_square() < my_list[j].calculate_square():
+            my_list[j + 1] = my_list[j]
+            j -= 1
+        my_list[j + 1] = key
     return my_list
 
 
-my_figures = [Ellipse('ellipse', 4, 5, (10, 10)), Line('line', (1, 2), (3, 4)), Rectangle('rectangle', (5, 5), (11, 5), (11, 1), (5, 1))]
+my_figures = [Ellipse('Ellipse', 4, 5, (10, 10)), Line('Line', (1, 2), (3, 4)), Rectangle('Rectangle', (5, 5), (11, 5), (11, 1), (5, 1))]
 
 print(*my_figures)
 
