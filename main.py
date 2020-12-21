@@ -1,16 +1,19 @@
 import math
+from abc import ABC, abstractmethod
 
 
-class Figure:
+class Figure(ABC):
     def __init__(self, name: str):
         self.name = name
 
     def __str__(self):
         return self.name + ": площадь = " + str(self.calculate_square()) + " периметр = " + str(self.calculate_perimeter())
 
+    @abstractmethod
     def calculate_square(self):
         pass
 
+    @abstractmethod
     def calculate_perimeter(self):
         pass
 
